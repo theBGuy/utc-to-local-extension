@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>UTC → Local Time — demo</title>
+  <style>
+    body { font: 15px/1.7 system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    h2 { margin-top: 28px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    li { margin: 4px 0; }
+    code { background: #f3f3f3; padding: 1px 4px; border-radius: 4px; }
+    .note { color: #666; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>UTC → Local Time — demo page</h1>
+  <p class="note">Load the extension (chrome://extensions → Load unpacked), then open this
+  page. Converted times get a dotted underline; hover to see the original UTC. For
+  <code>file://</code> pages, enable “Allow access to file URLs” on the extension's details page.</p>
+
+  <h2>The status.claude.com split-node case</h2>
+  <small>
+    Jun <var data-var="date">20</var>, <var data-var="time">18:02</var> UTC
+  </small>
+  <p class="note">The date and time live in separate <code>&lt;var&gt;</code> elements; the
+  whole “Jun 20, 18:02 UTC” is still recognized.</p>
+
+  <h2>Should convert</h2>
+  <ul>
+    <li>ISO 8601: 2026-06-20T18:02:33Z</li>
+    <li>ISO with offset: 2026-06-20T18:02:33+05:30</li>
+    <li>RFC 1123 / HTTP date: Sat, 20 Jun 2026 18:02:33 GMT</li>
+    <li>Date + 12h time: Jun 20, 2026, 6:02 PM UTC</li>
+    <li>Date + 24h time: January 15, 2026, 09:30 UTC</li>
+    <li>Numeric date: 2026/06/20 18:02 UTC</li>
+    <li>Time across <span>09:00</span> <span>UTC</span> separate spans</li>
+    <li>Lowercase: deployed 2026-06-20t18:02:33z</li>
+  </ul>
+
+  <h2>Should NOT convert (false-positive guards)</h2>
+  <ul>
+    <li>Aspect ratio 16:9</li>
+    <li>Score 3:2</li>
+    <li>Offset-bearing zone: webinar at 14:30 GMT+5</li>
+    <li>Non-UTC zone: meeting at 18:02 EST</li>
+    <li>Version v1.2.3</li>
+    <li>Duration: only 5:00 remaining</li>
+    <li>In code: <code>cron fires at 18:02 UTC</code></li>
+  </ul>
+
+  <h2>Dynamically added (tests the live observer)</h2>
+  <div id="dyn"></div>
+  <button id="add">Add a timestamp</button>
+  <script>
+    document.getElementById('add').addEventListener('click', function () {
+      var p = document.createElement('p');
+      p.textContent = 'Maintenance window: Jul 1, 2026, 05:00 UTC.';
+      document.getElementById('dyn').appendChild(p);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+/*
+ * Styling for converted timestamps. Intentionally minimal: inherit the host
+ * page's color and font so the value looks native, with only a subtle dotted
+ * underline to signal it was converted and is hoverable for the original.
+ */
+.utc2l {
+  border-bottom: 1px dotted currentColor;
+  text-decoration: none;
+  cursor: help;
+  /* keep it from inheriting link/button affordances */
+  color: inherit;
+  font: inherit;
+  white-space: nowrap;
+}

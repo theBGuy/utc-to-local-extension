@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UTC → Local Time</title>
+  <style>
+    :root {
+      --accent: #d97757;
+      --fg: #1f2328;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --fg: #e6e6e6; --muted: #9aa0a6; --border: #36383d; --bg: #1f2023; }
+    }
+    * { box-sizing: border-box; }
+    body {
+      width: 280px;
+      margin: 0;
+      padding: 14px 14px 16px;
+      font: 13px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+    }
+    header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    header img { width: 22px; height: 22px; }
+    header h1 { font-size: 14px; margin: 0; font-weight: 600; }
+    .row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-top: 1px solid var(--border);
+    }
+    .row:first-of-type { border-top: none; }
+    .row label { font-weight: 500; }
+    .hint { color: var(--muted); font-size: 11px; margin-top: 2px; }
+    select {
+      font: inherit; padding: 3px 6px; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--bg); color: var(--fg);
+    }
+    /* switch */
+    .switch { position: relative; display: inline-block; width: 38px; height: 22px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; inset: 0; cursor: pointer; background: #c2c6cc;
+      border-radius: 22px; transition: background .15s;
+    }
+    .slider::before {
+      content: ""; position: absolute; height: 16px; width: 16px; left: 3px; top: 3px;
+      background: #fff; border-radius: 50%; transition: transform .15s;
+    }
+    input:checked + .slider { background: var(--accent); }
+    input:checked + .slider::before { transform: translateX(16px); }
+    .count {
+      margin-top: 12px; padding: 8px 10px; border-radius: 8px;
+      background: rgba(217,119,87,.10); color: var(--fg); font-size: 12px;
+    }
+    .count b { font-variant-numeric: tabular-nums; }
+    .disabled-note { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icons/icon48.png" alt="">
+    <h1>UTC → Local Time</h1>
+  </header>
+
+  <div class="row">
+    <div>
+      <label for="enabled">Enabled</label>
+      <div class="hint">Convert UTC times everywhere</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="enabled">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="hourFormat">Time format</label>
+    </div>
+    <select id="hourFormat">
+      <option value="auto">Auto</option>
+      <option value="12">12-hour</option>
+      <option value="24">24-hour</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="showTimezone">Show time zone</label>
+      <div class="hint">Append your zone, e.g. EDT</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="showTimezone">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="siteToggle">Run on <span id="siteName">this site</span></label>
+      <div class="hint" id="siteHint">Per-site override</div>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="siteToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="count" id="count">No active page detected.</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

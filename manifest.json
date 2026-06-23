@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "UTC → Local Time",
+  "version": "0.1.0",
+  "description": "Finds UTC/GMT timestamps on any web page and shows them in your local time, with the original kept on hover.",
+  "permissions": ["storage"],
+  "action": {
+    "default_title": "UTC → Local Time",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["parser.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}
